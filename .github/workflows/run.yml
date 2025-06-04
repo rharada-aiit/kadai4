@@ -1,15 +1,15 @@
-name: same_test
-on: [push]
+name: Run test_gcd.sh
+on: push
 
 jobs:
-	io_test:
+	test:
 		name: User Linux Commands
 		runs-on: ubuntu-latest
 		steps:
 		 - name: Checkout
 		   uses: actions/checkout@v4
 		 - name: Permission Setting
-		  run: chmod +x script.sh test.sh
+		  run: chmod +x ./gcd.sh ./test_gcd.sh
 		  -name: Test Run
 		  run: ./test_gcd.sh
 
