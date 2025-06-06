@@ -4,7 +4,7 @@ tmp=./tmp/$$
 
 ERROR_EXIT () {
     cat ${tmp}-error
-    rm -f $tmp*
+    rm -f ${tmp}*
     exit 1
 }
 
