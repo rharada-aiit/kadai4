@@ -4,7 +4,7 @@ tmp=./tmp/$$
 
 ERROR_EXIT () {
     cat ${tmp}-error
-    rm -f ${tmp}*
+    rm -f ${tmp}-*
     exit 1
 }
 
@@ -74,55 +74,66 @@ echo "# --- 異常系テスト ---"
 
 echo "test2-1: 異常系（引数なし）"
 echo "入力値: （なし）"
-echo "期待値: Usage:・・・"
+echo "期待値: Usage: ./gcd.sh num1 num2"
 $GCD_SCRIPT > ${tmp}-result-8 2>&1
 echo "出力値: $(cat ${tmp}-result-8)"
-echo "Error:・・・" > ${tmp}-ans-8
-# diff ${tmp}-result-8 ${tmp}-ans-8 || echo "error in test2-1: 入力値=（なし）" >> ${tmp}-error
-grep -qE "Usage:|Error:" ${tmp}-result-8 || echo "error in test2-1: 入力値=（なし）" >> ${tmp}-error
+echo "Usage: ./gcd.sh num1 num2" > ${tmp}-ans-8
+diff ${tmp}-result-8 ${tmp}-ans-8 || echo "error in test2-1: 入力値=（なし）" >> ${tmp}-error
+
 echo "test2-2: 異常系（引数が1つ）"
 echo "入力値: 3"
-echo "期待値: Usage:・・・"
+echo "期待値: Usage: ./gcd.sh num1 num2"
 $GCD_SCRIPT 3 > ${tmp}-result-9 2>&1
 echo "出力値: $(cat ${tmp}-result-9)"
-echo "Error:・・・" > ${tmp}-ans-9
-#diff ${tmp}-result-9 ${tmp}-ans-9 || echo "error in test2-2: 入力値=3" >> ${tmp}-error
-grep -qE "Usage:|Error:" ${tmp}-result-8 || echo "error in test2-2: 入力値=333" >> ${tmp}-error
+echo "Usage: ./gcd.sh num1 num2" > ${tmp}-ans-9
+diff ${tmp}-result-9 ${tmp}-ans-9 || echo "error in test2-2: 入力値=3" >> ${tmp}-error
 
 echo "test2-3: 異常系（非数値入力）"
 echo "入力値: a b"
-echo "期待値: Error:・・・"
+echo "期待値: Error: Both arguments must be natural numbers."
 $GCD_SCRIPT a b > ${tmp}-result-10 2>&1
 echo "出力値: $(cat ${tmp}-result-10)"
-echo "Error:・・・" > ${tmp}-ans-10
-#diff ${tmp}-result-10 ${tmp}-ans-10 || echo "error in test2-3: 入力値=a b" >> ${tmp}-error
-grep -qE "Usage:|Error:" ${tmp}-result-8 || echo "error in test2-3 入力値=a b" >> ${tmp}-error
+echo "Error: Both arguments must be natural numbers." > ${tmp}-ans-10
+diff ${tmp}-result-10 ${tmp}-ans-10 || echo "error in test2-3: 入力値=a b" >> ${tmp}-error
 
 echo "test2-4: 異常系（負の値: -5 10）"
 echo "入力値: -5 10"
-echo "期待値: Error:・・・"
+echo "期待値: Error: Both arguments must be natural numbers."
 $GCD_SCRIPT -5 10 > ${tmp}-result-11 2>&1
 echo "出力値: $(cat ${tmp}-result-11)"
-echo "Error:・・・" > ${tmp}-ans-11
-#diff ${tmp}-result-11 ${tmp}-ans-11 || echo "error in test2-4: 入力値=-5 10" >> ${tmp}-error
-grep -qE "Usage:|Error:" ${tmp}-result-8 || echo "error in test2-4 入力値=-5 10" >> ${tmp}-error
+echo "Error: Both arguments must be natural numbers." > ${tmp}-ans-11
+diff ${tmp}-result-11 ${tmp}-ans-11 || echo "error in test2-4: 入力値=-5 10" >> ${tmp}-error
 
 echo "test2-5: 異常系（引数が3つ）"
 echo "入力値: 1 2 3"
-echo "期待値: Usage:・・・"
+echo "期待値: Usage: ./gcd.sh num1 num2"
 $GCD_SCRIPT 1 2 3 > ${tmp}-result-12 2>&1
 echo "出力値: $(cat ${tmp}-result-12)"
-echo "Error:・・・" > ${tmp}-ans-12
-#diff ${tmp}-result-12 ${tmp}-ans-12 || echo "error in test2-5: 入力値=1 2 3" >> ${tmp}-error
-grep -qE "Usage:|Error:" ${tmp}-result-8 || echo "error in test2-5 入力値=1 2 3" >> ${tmp}-error
+echo "Usage: ./gcd.sh num1 num2" > ${tmp}-ans-12
+diff ${tmp}-result-12 ${tmp}-ans-12 || echo "error in test2-5: 入力値=1 2 3" >> ${tmp}-error
+
+echo "test2-6: 異常系（小数: 3.5 2）"
+echo "入力値: 3.5 2"
+echo "期待値: Error: Both arguments must be natural numbers."
+$GCD_SCRIPT 3.5 2 > ${tmp}-result-13 2>&1
+echo "出力値: $(cat ${tmp}-result-13)"
+echo "Error: Both arguments must be natural numbers." > ${tmp}-ans-13
+diff ${tmp}-result-13 ${tmp}-ans-13 || echo "error in test2-6: 入力値=3.5 2" >> ${tmp}-error
+
+echo "test2-7: 異常系（極度に大きい数: 99999999999999999999999999 2）"
+echo "入力値: 99999999999999999999999999 2"
+echo "期待値: Error: Both arguments must be natural numbers."
+$GCD_SCRIPT 99999999999999999999999999 2 > ${tmp}-result-14 2>&1
+echo "出力値: $(cat ${tmp}-result-14)"
+echo "Error: Both arguments must be natural numbers." > ${tmp}-ans-14
+diff ${tmp}-result-14 ${tmp}-ans-14 || echo "error in test2-7: 入力値=99999999999999999999999999 2" >> ${tmp}-error
 
 # --- エラー判定 ---
 if [ -f ${tmp}-error ]; then
     ERROR_EXIT
 fi
 
-rm -f ${tmp}*
+rm -f ${tmp}-*
 
 echo "全てのテストが終了しました"
-
 
