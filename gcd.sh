@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # 引数の数が2であるかチェック
 if [ "$#" -ne 2 ]; then
   echo "Usage: $0 num1 num2" >&2
