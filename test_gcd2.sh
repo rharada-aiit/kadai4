@@ -128,3 +128,12 @@ echo "出力値: $(cat ${tmp}-result-14)"
 echo "Error: Both arguments must be natural numbers." > ${tmp}-ans-14
 diff ${tmp}-result-14 ${tmp}-ans-14 || echo "error in test2-7: 入力値=99999999999999999999999999 2" >> ${tmp}-error
 
+# --- エラー判定 ---
+if [ -f ${tmp}-error ]; then
+    ERROR_EXIT
+fi
+
+rm -f ${tmp}*
+
+echo "全てのテストが終了しました"
+
