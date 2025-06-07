@@ -4,7 +4,7 @@ tmp=./tmp/$$
 
 ERROR_EXIT () {
     cat ${tmp}-error
-    rm -f ${tmp}*
+    rm -f ${tmp}-*
     exit 1
 }
 
@@ -133,7 +133,7 @@ if [ -f ${tmp}-error ]; then
     ERROR_EXIT
 fi
 
-rm -f ${tmp}*
+rm -f ${tmp}-*
 
 echo "全てのテストが終了しました"
 
